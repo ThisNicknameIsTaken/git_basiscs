@@ -9,11 +9,14 @@ https://www.youtube.com/watch?v=zLih-WQwBSc
 import random
 
 DEF_CHOICE = 8      # how many times to repeat a dish
-MENU = ['spam', 'egg', 'sausage', 'bacon']  # that's all combinations
-MENU_MULTI = MENU + ['eggs', 'sausages']    # including plurals
-JOINTS = [', and ', ', ', ' and ', ' with ', ' and double portion of ']
+MENU = ['spam', 'egg', 'sausage', 'bacon', 'cola', 'pizza', 'cheese', 'borsch', 'solyanka']  # that's all combinations
+MENU_MULTI = MENU + ['eggs', 'sausages', 'colas', 'pizzas', 'solyankas']    # including plurals
+JOINTS = [', and ', ', ', ' and ', ' with ', ' and double portion of ', ' bowl of ', ' pool of ', ' suitcase of ']
 PREFERED = MENU[0]  # that's what promoted most
 FORBIDDEN = {'not', 'without', 'no'}
+FORBIDDEN_SET = ['not', 'without', 'no']
+
+DICTIONATY = FORBIDDEN_SET + JOINTS + MENU_MULTI
 
 SONG = ', '.join([PREFERED.capitalize()] + [PREFERED] * DEF_CHOICE) + '!'
 
@@ -36,6 +39,16 @@ def dialog(num_choice=DEF_CHOICE):
     def promote():
         print(D_PROMOTE.format(dishes=get_dishes(num_choice)))
     
+    diff = set(words).difference(set(DICTIONATY))
+    # user input dish on list and dish which is not in menu
+    # blame him!!!!
+    if(len(diff)):
+        print(D_BAD.format(dishes=diff))
+        promote()
+        return
+
+
+
     if set(words) & set(MENU_MULTI):
         # user named something on the menu - do further check
         if set(words) & set(FORBIDDEN):
