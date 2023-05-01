@@ -47,6 +47,10 @@ class Fortune:
         random.shuffle(self.deck.cards)
         for i in range(self.cards_amount):
             self.dealt_cards.append(self.deck.cards[i])
+
+    def print_dealt_cards(self):
+        for card in self.dealt_cards:
+            print(card)
     
     def calc_ranks(self):
         self.diamond_value = self.reset_value
@@ -101,6 +105,8 @@ class Fortune:
 
     def read_cards(self):
         self.deal_cards()
+        self.print_dealt_cards()
+        print("----------- Translating into prediction -----------")
         self.calc_ranks()
         self.clamp_ranks()
         self.provide_message()        
